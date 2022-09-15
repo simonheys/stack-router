@@ -3,12 +3,7 @@ import { FC } from "react"
 import { Route, Routes } from "../lib"
 import { About } from "../screens/About"
 import { Home } from "../screens/Home"
-import {
-  TabScreen1,
-  TabScreen2,
-  TabScreen3,
-  TabScreenContainer,
-} from "../screens/Tabs"
+import { TabScreen1, TabScreen2, TabScreen3 } from "../screens/Tabs"
 import { UserDetails } from "../screens/UserDetails"
 import { UserEdit } from "../screens/UserEdit"
 import { UserEditPicker } from "../screens/UserEditPicker"
