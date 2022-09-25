@@ -1,4 +1,10 @@
-import { Children, ReactNode, cloneElement, isValidElement } from "react"
+import {
+  Children,
+  ReactElement,
+  ReactNode,
+  cloneElement,
+  isValidElement,
+} from "react"
 import { Route, resolvePath } from "react-router-dom"
 
 import { StackScreen } from "../StackScreen"
@@ -68,7 +74,7 @@ export const getWrappedChildrenAndPresentation = (
       }
       /** return a clone of this Route with wrapped element and children */
       return cloneElement(
-        child,
+        child as ReactElement,
         {
           element,
         },
