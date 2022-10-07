@@ -3,8 +3,8 @@ import { Route, RouteProps } from "react-router-dom"
 
 import { StackPresentation } from "./utils/variants"
 
-interface IStackRoute extends RouteProps {
+type StackRouteProps = RouteProps & {
   presentation?: StackPresentation
 }
 
-export const StackRoute: FC<IStackRoute> = Route
+export const StackRoute: FC<StackRouteProps> = Route
