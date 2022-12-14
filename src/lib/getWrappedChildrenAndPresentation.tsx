@@ -7,16 +7,16 @@ import {
 } from "react"
 import { Route, resolvePath } from "react-router-dom"
 
-import { StackScreen } from "../StackScreen"
-import { StackPresentation } from "./variants"
+import { StackScreen } from "./StackScreen"
+import { Presentation } from "./types"
 
-export interface IWrappedChildrenAndPresentation {
+type DeclaredPresentationByPath = Record<string, Presentation>
+
+export interface WrappedChildrenAndPresentation {
   /** the routes wrapped with StackScreen */
   wrappedChildren: ReactNode
-  /** path mapped to path presentation */
-  presentationByPath: Record<string, StackPresentation>
-  /** all unique paths */
-  paths: string[]
+  /** `path` mapped to `presentation` declared in `<Route ... />` */
+  declaredPresentationByPath: DeclaredPresentationByPath
 }
 
 /**
@@ -25,25 +25,23 @@ export interface IWrappedChildrenAndPresentation {
  *
  * converts e.g.
  *
- * `<Route modal path="/users/picker" element={<UsersPicker />} />`
+ * `<Route presentation="modal" path="/users/picker" element={<UsersPicker />} />`
  *
  * into
  *
- * `<Route modal path="/users/picker" element={<StackScreen path={"/users/picker"}><UsersPicker /></StackScreen>}/>`
+ * `<Route presentation="modal" path="/users/picker" element={<StackScreen path={"/users/picker"}><UsersPicker /></StackScreen>}/>`
  *
  */
 
 export const getWrappedChildrenAndPresentation = (
   childRoutes: ReactNode,
   parentPath = "/",
-): IWrappedChildrenAndPresentation => {
-  const presentationByPath: IWrappedChildrenAndPresentation["presentationByPath"] =
-    {}
-  let unfilteredPaths: string[] = []
+): WrappedChildrenAndPresentation => {
+  const presentationByPath: DeclaredPresentationByPath = {}
   const wrappedChildren = Children.map(childRoutes, (child) => {
     if (isValidElement(child)) {
       let { children, element, presentation, path } = child.props
-      /** router path to this child, accounting for patent path */
+      /** router path to this child, accounting for parent path */
       const childPath = path
         ? resolvePath(path, parentPath).pathname
         : parentPath
@@ -52,21 +50,17 @@ export const getWrappedChildrenAndPresentation = (
           /** record the presentation prop for this router path if present */
           presentationByPath[childPath] = presentation
         }
-        /** keep a record of all raw paths */
-        unfilteredPaths.push(childPath)
       }
       /** recurse into children, also handles type===Fragment */
       if (children) {
         const {
           wrappedChildren: nestedWrappedChildren,
-          presentationByPath: nestedPresentationByPath,
-          paths: nestedPaths,
+          declaredPresentationByPath: nestedPresentationByPath,
         } = getWrappedChildrenAndPresentation(children, childPath)
         /** replace current children with wrapped */
         children = nestedWrappedChildren
         /** add the presentation records */
         Object.assign(presentationByPath, nestedPresentationByPath)
-        unfilteredPaths = unfilteredPaths.concat(nestedPaths)
       }
       /** wrap the element in StackScreen and copy in the router path as a prop */
       if (element) {
@@ -84,10 +78,8 @@ export const getWrappedChildrenAndPresentation = (
 
     return child
   })
-  const paths = Array.from(new Set(unfilteredPaths))
   return {
     wrappedChildren,
-    presentationByPath,
-    paths,
+    declaredPresentationByPath: presentationByPath,
   }
 }

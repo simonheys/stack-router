@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 
 import { NavigationBar } from "../ui/NavigationBar"
+import { ScreenContainer } from "../ui/ScreenContainer"
 import { TableCellLink } from "../ui/TableCell"
 
 export function Home() {
@@ -12,7 +13,7 @@ export function Home() {
     )
   }, [])
   return (
-    <>
+    <ScreenContainer>
       <NavigationBar title={"Stack Router PoC"} />
       <h2>Home</h2>
       <TableCellLink to="/tabs/1">Tabs</TableCellLink>
@@ -22,6 +23,6 @@ export function Home() {
       <TableCellLink to="/" onClick={onOpenWindow}>
         Open popup
       </TableCellLink>
-    </>
+    </ScreenContainer>
   )
 }

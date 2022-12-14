@@ -1,39 +1,31 @@
-import { ReactNode } from "react"
+import { Center, Flex } from "@chakra-ui/react"
+import { ComponentProps, FC, ReactNode } from "react"
 import { NavLink } from "react-router-dom"
-import styled from "styled-components"
 
 import { NavigationBar } from "../ui/NavigationBar"
 import { ScreenContainer } from "../ui/ScreenContainer"
 import { TableCellLink } from "../ui/TableCell"
 
-export const TabbBar = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 96px;
-  display: flex;
-  flex-direction: row;
-  justify-content: stretch;
-  background-color: rgba(255, 255, 255, 0.1);
-  z-index: 123;
-`
-
-export const Tab = styled(NavLink)`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: white;
-`
+const Tab: FC<
+  ComponentProps<typeof NavLink> & ComponentProps<typeof Center>
+> = (props) => {
+  return <Center flex={1} as={NavLink} color={"white"} {...props} />
+}
 
 export function TabScreenContainer({ children }: { children: ReactNode }) {
   return (
     <ScreenContainer>
       <NavigationBar back title={"Tabs"} />
       {children}
-      <TabbBar>
+      <Flex
+        position={"absolute"}
+        left={0}
+        right={0}
+        bottom={0}
+        height={"96px"}
+        bg={"rgba(255, 255, 255, 0.1)"}
+        zIndex={123}
+      >
         <Tab to="/tabs/1" replace>
           Tab1
         </Tab>
@@ -43,7 +35,7 @@ export function TabScreenContainer({ children }: { children: ReactNode }) {
         <Tab to="/tabs/3" replace>
           Tab3
         </Tab>
-      </TabbBar>
+      </Flex>
     </ScreenContainer>
   )
 }

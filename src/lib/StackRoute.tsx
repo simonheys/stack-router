@@ -1,10 +1,12 @@
 import { FC } from "react"
 import { Route, RouteProps } from "react-router-dom"
 
-import { StackPresentation } from "./utils/variants"
+import { Presentation } from "./types"
 
 type StackRouteProps = RouteProps & {
-  presentation?: StackPresentation
+  presentation?: Presentation
 }
+
+/** adds the 'presentation' prop to a {@link Route} */
 
 export const StackRoute: FC<StackRouteProps> = Route
