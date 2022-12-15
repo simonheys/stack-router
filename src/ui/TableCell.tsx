@@ -1,36 +1,30 @@
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import { FC, ReactNode } from "react"
-import { Link, LinkProps } from "react-router-dom"
-import styled from "styled-components"
+import { ChevronRightIcon } from "@chakra-ui/icons"
+import { Flex } from "@chakra-ui/react"
+import { ComponentProps, FC } from "react"
+import { Link } from "react-router-dom"
 
-export interface ITableCell extends LinkProps {
+export interface ITableCell extends ComponentProps<typeof Flex> {
   label?: string
-  children?: ReactNode
 }
-
-const Container = styled(Link)`
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 12px;
-  align-self: stretch;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  text-decoration: none;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  transition: background-color 0.1s;
-`
 
 export const TableCellLink: FC<ITableCell> = ({ label, children, ...rest }) => {
   return (
-    <Container {...rest}>
+    <Flex
+      as={Link}
+      gap={"12px"}
+      alignItems={"center"}
+      justifyContent={"space-between"}
+      px={"16px"}
+      py={"12px"}
+      alignSelf={"stretch"}
+      borderTop={"1px solid rgba(255, 255, 255, 0.2);"}
+      color={"white"}
+      textDecoration={"none"}
+      {...rest}
+    >
       {label}
       <>{children}</>
       <ChevronRightIcon />
-    </Container>
+    </Flex>
   )
 }

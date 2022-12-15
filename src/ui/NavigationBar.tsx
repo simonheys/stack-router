@@ -1,7 +1,6 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
-import CloseIcon from "@mui/icons-material/Close"
+import { ChevronLeftIcon, CloseIcon } from "@chakra-ui/icons"
+import { Center, Flex, Text } from "@chakra-ui/react"
 import { FC } from "react"
-import styled from "styled-components"
 
 import { BackButton } from "./BackButton"
 
@@ -11,47 +10,33 @@ export interface INavigationBar {
   title?: string
 }
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  align-self: stretch;
-  color: white;
-  background-color: rgba(255, 255, 255, 0.1);
-`
-
-const Title = styled.h4`
-  margin: 0;
-`
-
-const IconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-`
-
 export const NavigationBar: FC<INavigationBar> = ({ back, close, title }) => {
   return (
-    <Container>
-      <IconContainer>
+    <Flex
+      gap={"12px"}
+      alignItems={"center"}
+      justifyContent={"space-between"}
+      alignSelf={"stretch"}
+      color={"white"}
+      bg={"rgba(255, 255, 255, 0.1)"}
+    >
+      <Center w={"44px"} h={"44px"}>
         {back && (
           <BackButton>
             <ChevronLeftIcon />
           </BackButton>
         )}
-      </IconContainer>
-      <Title>{title}</Title>
-      <IconContainer>
+      </Center>
+      <Text as={"h4"} m={0}>
+        {title}
+      </Text>
+      <Center w={"44px"} h={"44px"}>
         {close && (
           <BackButton>
             <CloseIcon />
           </BackButton>
         )}
-      </IconContainer>
-    </Container>
+      </Center>
+    </Flex>
   )
 }

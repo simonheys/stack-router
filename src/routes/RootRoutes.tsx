@@ -27,9 +27,9 @@ export const RootRoutes: FC = () => {
         <Route index element={<UsersPicker />} />
         <Route path=":id">
           <Route index element={<UserDetails />} />
-          <Route presentation="modal-sheet" path="edit">
+          <Route presentation="modalSheet" path="edit">
             <Route index element={<UserEdit />} />
-            <Route presentation="modal-sheet" path="picker">
+            <Route presentation="modalSheet" path="picker">
               <Route index element={<UserEditPicker />} />
             </Route>
           </Route>
