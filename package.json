@@ -53,7 +53,7 @@
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
+    "@types/react-dom": "^18.0.10",
     "import-sort-style-module": "^6.0.0",
     "prettier": ">=2",
     "prettier-plugin-import-sort": "^0.0.7",
